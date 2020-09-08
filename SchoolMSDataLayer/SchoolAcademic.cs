@@ -11,13 +11,20 @@ namespace SchoolMSDataLayer
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
     
     public partial class SchoolAcademic
     {
+     
+       
         public int AcademicID { get; set; }
+      
         public System.DateTime AcademicStartDate { get; set; }
+     
         public System.DateTime AcademicEndDate { get; set; }
+        
         public bool IsCurrentAcademic { get; set; }
+      
         public int SchoolID { get; set; }
     }
 }
