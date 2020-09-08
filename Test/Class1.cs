@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SchoolMSDataLayer
+namespace Test
 {
     public class Class1
     {
