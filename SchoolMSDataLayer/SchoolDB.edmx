@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ClassSubjects">
+          <Key>
+            <PropertyRef Name="CSID" />
+          </Key>
+          <Property Name="CSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SCID" Type="int" Nullable="false" />
+          <Property Name="SSID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SchoolAcademic">
           <Key>
             <PropertyRef Name="AcademicID" />
@@ -15,6 +23,16 @@
           <Property Name="IsCurrentAcademic" Type="bit" Nullable="false" />
           <Property Name="SchoolID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SchoolClasses">
+          <Key>
+            <PropertyRef Name="SCID" />
+          </Key>
+          <Property Name="SCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Schoolclassname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Displayorder" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Schoolid" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SchoolMaster">
           <Key>
             <PropertyRef Name="SchoolID" />
@@ -23,12 +41,24 @@
           <Property Name="SchoolName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SchoolSubjects">
+          <Key>
+            <PropertyRef Name="SSID" />
+          </Key>
+          <Property Name="SSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subjectcode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Subjectname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Schoolid" Type="int" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="SchoolMSModelStoreContainer">
+          <EntitySet Name="ClassSubjects" EntityType="Self.ClassSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolAcademic" EntityType="Self.SchoolAcademic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolClasses" EntityType="Self.SchoolClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolMaster" EntityType="Self.SchoolMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolSubjects" EntityType="Self.SchoolSubjects" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -53,7 +83,38 @@
         <EntityContainer Name="SchoolMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="SchoolAcademics" EntityType="Self.SchoolAcademic" />
           <EntitySet Name="SchoolMasters" EntityType="Self.SchoolMaster" />
+          <EntitySet Name="ClassSubjects" EntityType="SchoolMSModel.ClassSubject" />
+          <EntitySet Name="SchoolClasses" EntityType="SchoolMSModel.SchoolClass" />
+          <EntitySet Name="SchoolSubjects" EntityType="SchoolMSModel.SchoolSubject" />
         </EntityContainer>
+        <EntityType Name="ClassSubject">
+          <Key>
+            <PropertyRef Name="CSID" />
+          </Key>
+          <Property Name="CSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SCID" Type="Int32" Nullable="false" />
+          <Property Name="SSID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolClass">
+          <Key>
+            <PropertyRef Name="SCID" />
+          </Key>
+          <Property Name="SCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schoolclassname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Displayorder" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Schoolid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolSubject">
+          <Key>
+            <PropertyRef Name="SSID" />
+          </Key>
+          <Property Name="SSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subjectcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subjectname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Schoolid" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -77,6 +138,37 @@
                 <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
                 <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassSubjects">
+            <EntityTypeMapping TypeName="SchoolMSModel.ClassSubject">
+              <MappingFragment StoreEntitySet="ClassSubjects">
+                <ScalarProperty Name="SSID" ColumnName="SSID" />
+                <ScalarProperty Name="SCID" ColumnName="SCID" />
+                <ScalarProperty Name="CSID" ColumnName="CSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolClasses">
+            <EntityTypeMapping TypeName="SchoolMSModel.SchoolClass">
+              <MappingFragment StoreEntitySet="SchoolClasses">
+                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Displayorder" ColumnName="Displayorder" />
+                <ScalarProperty Name="Schoolclassname" ColumnName="Schoolclassname" />
+                <ScalarProperty Name="SCID" ColumnName="SCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolSubjects">
+            <EntityTypeMapping TypeName="SchoolMSModel.SchoolSubject">
+              <MappingFragment StoreEntitySet="SchoolSubjects">
+                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Subjectname" ColumnName="Subjectname" />
+                <ScalarProperty Name="Subjectcode" ColumnName="Subjectcode" />
+                <ScalarProperty Name="SSID" ColumnName="SSID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

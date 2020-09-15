@@ -69,8 +69,16 @@ namespace SMSApi.Controllers
                     }));
             }
         }
-
-
+        [Route("api/GetAllClass/{schoolId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllClass(int schoolId)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                var list = schoolMSEntities.SchoolClasses.Where(x => x.Schoolid == schoolId).ToList();
+                return Ok(list);
+            }
+        }
     }
 }
 

@@ -27,5 +27,8 @@ namespace SchoolMSDataLayer
     
         public virtual DbSet<SchoolAcademic> SchoolAcademics { get; set; }
         public virtual DbSet<SchoolMaster> SchoolMasters { get; set; }
+        public virtual DbSet<ClassSubject> ClassSubjects { get; set; }
+        public virtual DbSet<SchoolClass> SchoolClasses { get; set; }
+        public virtual DbSet<SchoolSubject> SchoolSubjects { get; set; }
     }
 }

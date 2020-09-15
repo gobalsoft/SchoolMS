@@ -50,8 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassSubject.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchoolAcademic.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolClass.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="SchoolDB.Context.cs">
@@ -70,6 +76,9 @@
       <DependentUpon>SchoolDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="SchoolMaster.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolSubject.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>

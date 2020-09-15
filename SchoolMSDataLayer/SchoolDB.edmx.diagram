@@ -7,6 +7,9 @@
       <Diagram DiagramId="c4e0847b17384c9eb6ac3a00727395e4" Name="Diagram1">
         <EntityTypeShape EntityType="SchoolMSModel.SchoolAcademic" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SchoolMSModel.SchoolMaster" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.ClassSubject" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.SchoolClass" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.SchoolSubject" Width="1.5" PointX="4.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
