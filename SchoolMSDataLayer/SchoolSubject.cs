@@ -17,7 +17,9 @@ namespace SchoolMSDataLayer
         public int SSID { get; set; }
         public string Subjectcode { get; set; }
         public string Subjectname { get; set; }
-        public string Category { get; set; }
         public int Schoolid { get; set; }
+        public Nullable<int> Category_id { get; set; }
+    
+        public virtual Subject_Category Subject_Category { get; set; }
     }
 }

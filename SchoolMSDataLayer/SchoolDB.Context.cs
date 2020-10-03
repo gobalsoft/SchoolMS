@@ -12,23 +12,25 @@ namespace SchoolMSDataLayer
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class SchoolMSEntities : DbContext
     {
         public SchoolMSEntities()
             : base("name=SchoolMSEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<SchoolAcademic> SchoolAcademics { get; set; }
         public virtual DbSet<SchoolMaster> SchoolMasters { get; set; }
         public virtual DbSet<ClassSubject> ClassSubjects { get; set; }
         public virtual DbSet<SchoolClass> SchoolClasses { get; set; }
         public virtual DbSet<SchoolSubject> SchoolSubjects { get; set; }
+        public virtual DbSet<Subject_Category> Subject_Category { get; set; }
     }
 }

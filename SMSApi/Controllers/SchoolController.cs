@@ -52,7 +52,6 @@ namespace SMSApi.Controllers
             }
 
         }
-
         [Route("api/UpdateAcademic")]
         [HttpPost]
         public IHttpActionResult UpdateSchoolAcademic(SchoolAcademic schoolAcademic)
@@ -69,6 +68,8 @@ namespace SMSApi.Controllers
                     }));
             }
         }
+
+
         [Route("api/GetAllClass/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetAllClass(int schoolId)
@@ -79,6 +80,50 @@ namespace SMSApi.Controllers
                 return Ok(list);
             }
         }
+        [Route("api/SaveSchoolClass")]
+        [HttpPost]
+        //Save Class
+        public IHttpActionResult SaveSchoolClass(SchoolClass schoolClass)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                schoolMSEntities.SchoolClasses.Add(schoolClass);
+                return Ok(schoolMSEntities.SaveChanges());
+            }
+        }
+
+
+        [Route("api/GetAllSubject/{schoolId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllSubject(int schoolId)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                return Ok(schoolMSEntities.SchoolSubjects.Where(x => x.Schoolid == schoolId).ToList());
+            }
+        }
+        [Route("api/SaveClassSubject")]
+        [HttpPost]
+        //Save Calss Subject
+        public IHttpActionResult SaveClassSubject(ClassSubject classSubject)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                schoolMSEntities.ClassSubjects.Add(classSubject);
+                return Ok(schoolMSEntities.SaveChanges());
+            }
+        }
+
+        [Route("api/GetClassSubject/{schoolId}")]
+        [HttpGet]
+        public IHttpActionResult GetClassSubject(int schoolId, int classId)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                return Ok();
+            }
+        }
+
     }
 }
 

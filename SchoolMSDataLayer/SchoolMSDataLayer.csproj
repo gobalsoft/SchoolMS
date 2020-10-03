@@ -81,6 +81,9 @@
     <Compile Include="SchoolSubject.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subject_Category.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="SchoolDB.edmx">
