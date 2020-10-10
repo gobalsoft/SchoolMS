@@ -25,7 +25,7 @@ namespace SchoolMSApi
             config.EnableCors(cors);
 
             // Set JSON formatter as default one and remove XmlFormatter
-
+             
             
         }
     }
