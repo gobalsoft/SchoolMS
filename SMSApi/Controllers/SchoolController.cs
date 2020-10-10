@@ -10,9 +10,9 @@ using Z.EntityFramework.Plus;
 
 namespace SMSApi.Controllers
 {
-
     public class SchoolController : ApiController
     {
+        //Academic page
         [Route("api/SchoolAcademic/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetSchoolAllAcademic(int schoolId)
@@ -69,7 +69,7 @@ namespace SMSApi.Controllers
             }
         }
 
-
+        //Class
         [Route("api/GetAllClass/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetAllClass(int schoolId)
@@ -82,7 +82,6 @@ namespace SMSApi.Controllers
         }
         [Route("api/SaveSchoolClass")]
         [HttpPost]
-        //Save Class
         public IHttpActionResult SaveSchoolClass(SchoolClass schoolClass)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
@@ -92,7 +91,7 @@ namespace SMSApi.Controllers
             }
         }
 
-
+        //School Subject
         [Route("api/GetAllSubject/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetAllSubject(int schoolId)
@@ -102,6 +101,18 @@ namespace SMSApi.Controllers
                 return Ok(schoolMSEntities.SchoolSubjects.Where(x => x.Schoolid == schoolId).ToList());
             }
         }
+        [Route("api/SaveSchoolSubject")]
+        [HttpPost]
+        public IHttpActionResult SaveSchoolSubject(SchoolSubject schoolSubject)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                schoolMSEntities.SchoolSubjects.Add(schoolSubject);
+                return Ok(schoolMSEntities.SaveChanges());
+            }
+        }
+
+        //Class Subject
         [Route("api/SaveClassSubject")]
         [HttpPost]
         //Save Calss Subject
@@ -120,6 +131,8 @@ namespace SMSApi.Controllers
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
+                var a = from p in schsms.exe
+
                 return Ok();
             }
         }
