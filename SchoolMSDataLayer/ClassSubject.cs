@@ -14,8 +14,8 @@ namespace SchoolMSDataLayer
     
     public partial class ClassSubject
     {
-        public int ClassSubjectId { get; set; }
-        public int ClassId { get; set; }
-        public int SubjectId { get; set; }
+        public int CSID { get; set; }
+        public int SCID { get; set; }
+        public int SSID { get; set; }
     }
 }

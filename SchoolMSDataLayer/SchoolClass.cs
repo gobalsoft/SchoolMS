@@ -10,11 +10,14 @@
 namespace SchoolMSDataLayer
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetClassSubject_Result
+    public partial class SchoolClass
     {
-        public int SubjectID { get; set; }
-        public string SubjectName { get; set; }
-        public string IsSelected { get; set; }
+        public int SCID { get; set; }
+        public string Schoolclassname { get; set; }
+        public int Displayorder { get; set; }
+        public bool Status { get; set; }
+        public int Schoolid { get; set; }
     }
 }

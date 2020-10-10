@@ -5,23 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Class">
-          <Key>
-            <PropertyRef Name="ClassID" />
-          </Key>
-          <Property Name="ClassID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClassName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Displayorder" Type="int" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
-          <Property Name="Schoolid" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="ClassSubjects">
           <Key>
-            <PropertyRef Name="ClassSubjectId" />
+            <PropertyRef Name="CSID" />
           </Key>
-          <Property Name="ClassSubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClassId" Type="int" Nullable="false" />
-          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="CSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SCID" Type="int" Nullable="false" />
+          <Property Name="SSID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SchoolAcademic">
           <Key>
@@ -33,6 +23,16 @@
           <Property Name="IsCurrentAcademic" Type="bit" Nullable="false" />
           <Property Name="SchoolID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SchoolClasses">
+          <Key>
+            <PropertyRef Name="SCID" />
+          </Key>
+          <Property Name="SCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Schoolclassname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Displayorder" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Schoolid" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SchoolMaster">
           <Key>
             <PropertyRef Name="SchoolID" />
@@ -40,6 +40,16 @@
           <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SchoolName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolSubjects">
+          <Key>
+            <PropertyRef Name="SSID" />
+          </Key>
+          <Property Name="SSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subjectcode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Subjectname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Schoolid" Type="int" Nullable="false" />
+          <Property Name="Category_id" Type="int" />
         </EntityType>
         <EntityType Name="Subject_Category">
           <Key>
@@ -50,82 +60,34 @@
           <Property Name="Status" Type="bit" />
           <Property Name="SchoolId" Type="tinyint" />
         </EntityType>
-        <EntityType Name="SubjectsMaster">
-          <Key>
-            <PropertyRef Name="SubjectID" />
-          </Key>
-          <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Subjectcode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Subjectname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Schoolid" Type="int" Nullable="false" />
-          <Property Name="Category_id" Type="int" />
-        </EntityType>
         <Association Name="FK_SchoolSubjects_Subject_Category">
           <End Role="Subject_Category" Type="Self.Subject_Category" Multiplicity="0..1" />
-          <End Role="SubjectsMaster" Type="Self.SubjectsMaster" Multiplicity="*" />
+          <End Role="SchoolSubjects" Type="Self.SchoolSubjects" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Subject_Category">
               <PropertyRef Name="Category_id" />
             </Principal>
-            <Dependent Role="SubjectsMaster">
+            <Dependent Role="SchoolSubjects">
               <PropertyRef Name="Category_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetClassSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="classID" Type="int" Mode="In" />
-          <Parameter Name="schoolId" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="SchoolMSModelStoreContainer">
-          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClassSubjects" EntityType="Self.ClassSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolAcademic" EntityType="Self.SchoolAcademic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolClasses" EntityType="Self.SchoolClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolMaster" EntityType="Self.SchoolMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolSubjects" EntityType="Self.SchoolSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subject_Category" EntityType="Self.Subject_Category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SubjectsMaster" EntityType="Self.SubjectsMaster" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_SchoolSubjects_Subject_Category" Association="Self.FK_SchoolSubjects_Subject_Category">
             <End Role="Subject_Category" EntitySet="Subject_Category" />
-            <End Role="SubjectsMaster" EntitySet="SubjectsMaster" />
+            <End Role="SchoolSubjects" EntitySet="SchoolSubjects" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="SchoolMSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Classes" EntityType="SchoolMSModel.Class" />
-          <EntitySet Name="ClassSubjects" EntityType="SchoolMSModel.ClassSubject" />
-          <EntitySet Name="SchoolAcademics" EntityType="SchoolMSModel.SchoolAcademic" />
-          <EntitySet Name="SchoolMasters" EntityType="SchoolMSModel.SchoolMaster" />
-          <EntitySet Name="Subject_Category" EntityType="SchoolMSModel.Subject_Category" />
-          <EntitySet Name="SubjectsMasters" EntityType="SchoolMSModel.SubjectsMaster" />
-          <AssociationSet Name="FK_SchoolSubjects_Subject_Category" Association="SchoolMSModel.FK_SchoolSubjects_Subject_Category">
-            <End Role="Subject_Category" EntitySet="Subject_Category" />
-            <End Role="SubjectsMaster" EntitySet="SubjectsMasters" />
-          </AssociationSet>
-          <FunctionImport Name="GetClassSubject" ReturnType="Collection(SchoolMSModel.GetClassSubject_Result)">
-            <Parameter Name="classID" Mode="In" Type="Int32" />
-            <Parameter Name="schoolId" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <EntityType Name="Class">
-          <Key>
-            <PropertyRef Name="ClassID" />
-          </Key>
-          <Property Name="ClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Displayorder" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="Schoolid" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ClassSubject">
-          <Key>
-            <PropertyRef Name="ClassSubjectId" />
-          </Key>
-          <Property Name="ClassSubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClassId" Type="Int32" Nullable="false" />
-          <Property Name="SubjectId" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="SchoolAcademic">
           <Key>
             <PropertyRef Name="AcademicID" />
@@ -141,8 +103,49 @@
             <PropertyRef Name="SchoolID" />
           </Key>
           <Property Name="SchoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SchoolName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SchoolMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SchoolAcademics" EntityType="Self.SchoolAcademic" />
+          <EntitySet Name="SchoolMasters" EntityType="Self.SchoolMaster" />
+          <EntitySet Name="ClassSubjects" EntityType="SchoolMSModel.ClassSubject" />
+          <EntitySet Name="SchoolClasses" EntityType="SchoolMSModel.SchoolClass" />
+          <EntitySet Name="SchoolSubjects" EntityType="SchoolMSModel.SchoolSubject" />
+          <EntitySet Name="Subject_Category" EntityType="SchoolMSModel.Subject_Category" />
+          <AssociationSet Name="FK_SchoolSubjects_Subject_Category" Association="SchoolMSModel.FK_SchoolSubjects_Subject_Category">
+            <End Role="Subject_Category" EntitySet="Subject_Category" />
+            <End Role="SchoolSubject" EntitySet="SchoolSubjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ClassSubject">
+          <Key>
+            <PropertyRef Name="CSID" />
+          </Key>
+          <Property Name="CSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SCID" Type="Int32" Nullable="false" />
+          <Property Name="SSID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolClass">
+          <Key>
+            <PropertyRef Name="SCID" />
+          </Key>
+          <Property Name="SCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schoolclassname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Displayorder" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Schoolid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolSubject">
+          <Key>
+            <PropertyRef Name="SSID" />
+          </Key>
+          <Property Name="SSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subjectcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subjectname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Schoolid" Type="Int32" Nullable="false" />
+          <Property Name="Category_id" Type="Int32" />
+          <NavigationProperty Name="Subject_Category" Relationship="SchoolMSModel.FK_SchoolSubjects_Subject_Category" FromRole="SchoolSubject" ToRole="Subject_Category" />
         </EntityType>
         <EntityType Name="Subject_Category">
           <Key>
@@ -150,81 +153,76 @@
           </Key>
           <Property Name="Category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SchoolSubjects" Relationship="SchoolMSModel.FK_SchoolSubjects_Subject_Category" FromRole="Subject_Category" ToRole="SchoolSubject" />
           <Property Name="Status" Type="Boolean" />
           <Property Name="SchoolId" Type="Byte" />
-          <NavigationProperty Name="SubjectsMasters" Relationship="SchoolMSModel.FK_SchoolSubjects_Subject_Category" FromRole="Subject_Category" ToRole="SubjectsMaster" />
-        </EntityType>
-        <EntityType Name="SubjectsMaster">
-          <Key>
-            <PropertyRef Name="SubjectID" />
-          </Key>
-          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Subjectcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subjectname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Schoolid" Type="Int32" Nullable="false" />
-          <Property Name="Category_id" Type="Int32" />
-          <NavigationProperty Name="Subject_Category" Relationship="SchoolMSModel.FK_SchoolSubjects_Subject_Category" FromRole="SubjectsMaster" ToRole="Subject_Category" />
         </EntityType>
         <Association Name="FK_SchoolSubjects_Subject_Category">
           <End Type="SchoolMSModel.Subject_Category" Role="Subject_Category" Multiplicity="0..1" />
-          <End Type="SchoolMSModel.SubjectsMaster" Role="SubjectsMaster" Multiplicity="*" />
+          <End Type="SchoolMSModel.SchoolSubject" Role="SchoolSubject" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Subject_Category">
               <PropertyRef Name="Category_id" />
             </Principal>
-            <Dependent Role="SubjectsMaster">
+            <Dependent Role="SchoolSubject">
               <PropertyRef Name="Category_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetClassSubject_Result">
-          <Property Type="Int32" Name="SubjectID" Nullable="false" />
-          <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="IsSelected" Nullable="false" MaxLength="1" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SchoolMSModelStoreContainer" CdmEntityContainer="SchoolMSEntities">
-          <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="SchoolMSModel.Class">
-              <MappingFragment StoreEntitySet="Class">
-                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Displayorder" ColumnName="Displayorder" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClassSubjects">
-            <EntityTypeMapping TypeName="SchoolMSModel.ClassSubject">
-              <MappingFragment StoreEntitySet="ClassSubjects">
-                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
-                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-                <ScalarProperty Name="ClassSubjectId" ColumnName="ClassSubjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SchoolAcademics">
             <EntityTypeMapping TypeName="SchoolMSModel.SchoolAcademic">
               <MappingFragment StoreEntitySet="SchoolAcademic">
-                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
-                <ScalarProperty Name="IsCurrentAcademic" ColumnName="IsCurrentAcademic" />
-                <ScalarProperty Name="AcademicEndDate" ColumnName="AcademicEndDate" />
-                <ScalarProperty Name="AcademicStartDate" ColumnName="AcademicStartDate" />
                 <ScalarProperty Name="AcademicID" ColumnName="AcademicID" />
+                <ScalarProperty Name="AcademicStartDate" ColumnName="AcademicStartDate" />
+                <ScalarProperty Name="AcademicEndDate" ColumnName="AcademicEndDate" />
+                <ScalarProperty Name="IsCurrentAcademic" ColumnName="IsCurrentAcademic" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SchoolMasters">
             <EntityTypeMapping TypeName="SchoolMSModel.SchoolMaster">
               <MappingFragment StoreEntitySet="SchoolMaster">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
                 <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassSubjects">
+            <EntityTypeMapping TypeName="SchoolMSModel.ClassSubject">
+              <MappingFragment StoreEntitySet="ClassSubjects">
+                <ScalarProperty Name="SSID" ColumnName="SSID" />
+                <ScalarProperty Name="SCID" ColumnName="SCID" />
+                <ScalarProperty Name="CSID" ColumnName="CSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolClasses">
+            <EntityTypeMapping TypeName="SchoolMSModel.SchoolClass">
+              <MappingFragment StoreEntitySet="SchoolClasses">
+                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Displayorder" ColumnName="Displayorder" />
+                <ScalarProperty Name="Schoolclassname" ColumnName="Schoolclassname" />
+                <ScalarProperty Name="SCID" ColumnName="SCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolSubjects">
+            <EntityTypeMapping TypeName="SchoolMSModel.SchoolSubject">
+              <MappingFragment StoreEntitySet="SchoolSubjects">
+                <ScalarProperty Name="Category_id" ColumnName="Category_id" />
+                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
+                <ScalarProperty Name="Subjectname" ColumnName="Subjectname" />
+                <ScalarProperty Name="Subjectcode" ColumnName="Subjectcode" />
+                <ScalarProperty Name="SSID" ColumnName="SSID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -238,26 +236,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SubjectsMasters">
-            <EntityTypeMapping TypeName="SchoolMSModel.SubjectsMaster">
-              <MappingFragment StoreEntitySet="SubjectsMaster">
-                <ScalarProperty Name="Category_id" ColumnName="Category_id" />
-                <ScalarProperty Name="Schoolid" ColumnName="Schoolid" />
-                <ScalarProperty Name="Subjectname" ColumnName="Subjectname" />
-                <ScalarProperty Name="Subjectcode" ColumnName="Subjectcode" />
-                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetClassSubject" FunctionName="SchoolMSModel.Store.GetClassSubject">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SchoolMSModel.GetClassSubject_Result">
-                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
-                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

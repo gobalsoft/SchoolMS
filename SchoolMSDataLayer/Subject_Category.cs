@@ -17,7 +17,7 @@ namespace SchoolMSDataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subject_Category()
         {
-            this.SubjectsMasters = new HashSet<SubjectsMaster>();
+            this.SchoolSubjects = new HashSet<SchoolSubject>();
         }
     
         public int Category_id { get; set; }
@@ -26,6 +26,6 @@ namespace SchoolMSDataLayer
         public Nullable<byte> SchoolId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubjectsMaster> SubjectsMasters { get; set; }
+        public virtual ICollection<SchoolSubject> SchoolSubjects { get; set; }
     }
 }

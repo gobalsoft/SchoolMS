@@ -12,12 +12,14 @@ namespace SchoolMSDataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Class
+    public partial class SchoolSubject
     {
-        public int ClassID { get; set; }
-        public string ClassName { get; set; }
-        public int Displayorder { get; set; }
-        public bool Status { get; set; }
+        public int SSID { get; set; }
+        public string Subjectcode { get; set; }
+        public string Subjectname { get; set; }
         public int Schoolid { get; set; }
+        public Nullable<int> Category_id { get; set; }
+    
+        public virtual Subject_Category Subject_Category { get; set; }
     }
 }
