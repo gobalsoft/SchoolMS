@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using Newtonsoft.Json.Serialization;
 
 namespace SchoolMSApi
 {
@@ -25,8 +23,8 @@ namespace SchoolMSApi
             config.EnableCors(cors);
 
             // Set JSON formatter as default one and remove XmlFormatter
-
-
+             
+            
         }
     }
 }
