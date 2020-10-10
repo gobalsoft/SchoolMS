@@ -19,6 +19,12 @@ namespace SchoolMSApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            config.EnableCors(cors);
+
+            // Set JSON formatter as default one and remove XmlFormatter
+
+            
         }
     }
 }

@@ -12,6 +12,8 @@ namespace SchoolMSDataLayer
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SchoolMSEntities : DbContext
     {
@@ -25,7 +27,24 @@ namespace SchoolMSDataLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<ClassSubject> ClassSubjects { get; set; }
         public virtual DbSet<SchoolAcademic> SchoolAcademics { get; set; }
         public virtual DbSet<SchoolMaster> SchoolMasters { get; set; }
+        public virtual DbSet<Subject_Category> Subject_Category { get; set; }
+        public virtual DbSet<SubjectsMaster> SubjectsMasters { get; set; }
+    
+        public virtual ObjectResult<GetClassSubject_Result> GetClassSubject(Nullable<int> classID, Nullable<int> schoolId)
+        {
+            var classIDParameter = classID.HasValue ?
+                new ObjectParameter("classID", classID) :
+                new ObjectParameter("classID", typeof(int));
+    
+            var schoolIdParameter = schoolId.HasValue ?
+                new ObjectParameter("schoolId", schoolId) :
+                new ObjectParameter("schoolId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetClassSubject_Result>("GetClassSubject", classIDParameter, schoolIdParameter);
+        }
     }
 }
