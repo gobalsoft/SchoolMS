@@ -76,17 +76,17 @@ namespace SMSApi.Controllers
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                var list = schoolMSEntities.SchoolClasses.Where(x => x.Schoolid == schoolId).ToList();
+                var list = schoolMSEntities.Classes.Where(x => x.Schoolid == schoolId).ToList();
                 return Ok(list);
             }
         }
         [Route("api/SaveSchoolClass")]
         [HttpPost]
-        public IHttpActionResult SaveSchoolClass(SchoolClass schoolClass)
+        public IHttpActionResult SaveSchoolClass(Class schoolClass)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                schoolMSEntities.SchoolClasses.Add(schoolClass);
+                schoolMSEntities.Classes.Add(schoolClass);
                 return Ok(schoolMSEntities.SaveChanges());
             }
         }
@@ -98,16 +98,28 @@ namespace SMSApi.Controllers
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                return Ok(schoolMSEntities.SchoolSubjects.Where(x => x.Schoolid == schoolId).ToList());
+                var item = (from subjectmaster in schoolMSEntities.SubjectsMasters
+                            join category in schoolMSEntities.Subject_Category
+                            on subjectmaster.Category_id equals category.Category_id into temp
+                            from t in temp.DefaultIfEmpty()
+                            where subjectmaster.Schoolid == schoolId
+                            select new
+                            {
+                                SubjectID = subjectmaster.SubjectID,
+                                Subjectcode = subjectmaster.Subjectcode,
+                                Subjectname = subjectmaster.Subjectname,
+                                CategoryName = t.CategoryName,
+                            }).ToList();
+                return Ok(item);
             }
         }
         [Route("api/SaveSchoolSubject")]
         [HttpPost]
-        public IHttpActionResult SaveSchoolSubject(SchoolSubject schoolSubject)
+        public IHttpActionResult SaveSchoolSubject(SubjectsMaster schoolSubject)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                schoolMSEntities.SchoolSubjects.Add(schoolSubject);
+                schoolMSEntities.SubjectsMasters.Add(schoolSubject);
                 return Ok(schoolMSEntities.SaveChanges());
             }
         }
@@ -115,7 +127,6 @@ namespace SMSApi.Controllers
         //Class Subject
         [Route("api/SaveClassSubject")]
         [HttpPost]
-        //Save Calss Subject
         public IHttpActionResult SaveClassSubject(ClassSubject classSubject)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
@@ -124,16 +135,48 @@ namespace SMSApi.Controllers
                 return Ok(schoolMSEntities.SaveChanges());
             }
         }
-
-        [Route("api/GetClassSubject/{schoolId}")]
+        [Route("api/GetClassSubject/{schoolId}/{classId}")]
         [HttpGet]
         public IHttpActionResult GetClassSubject(int schoolId, int classId)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                var a = from p in schsms.exe
 
-                return Ok();
+                var item = schoolMSEntities.GetClassSubject(classId, schoolId).ToList();
+
+                //var item = (from classSubject in schoolMSEntities.ClassSubjects
+                //            join subjectMaster in schoolMSEntities.SubjectsMasters
+                //            on classSubject.SubjectId equals subjectMaster.SubjectID
+                //            join classes in schoolMSEntities.Classes
+                //            on classSubject.ClassId equals classes.ClassID
+                //            where classSubject.ClassId == classId
+                //            select new
+                //            {
+                //                //ClassSubjectId = classSubject.ClassSubjectId,
+                //                // ClassId = classes.ClassID,
+                //                //ClassName = classes.ClassName,
+                //                SubjectId = subjectMaster.SubjectID,
+                //                SubjectName = subjectMaster.Subjectname,
+                //            });
+
+                //var queryable = (from subjectMaster in schoolMSEntities.SubjectsMasters
+                //                 join classSubject in schoolMSEntities.ClassSubjects
+                //                 on subjectMaster.SubjectID equals classSubject.SubjectId into temp
+                //                 from t in temp.DefaultIfEmpty()
+                //                 where t.ClassId == classId
+                //                 select new
+                //                 {
+                //                     //ClassSubjectId = t.ClassSubjectId,
+                //                     //ClassId = classes.ClassID,
+                //                     //ClassName = classes.ClassName,
+                //                     SubjectId = subjectMaster.SubjectID,
+                //                     SubjectName = subjectMaster.Subjectname,
+                //                 });
+
+                //var a = item.Union(queryable).Distinct().ToList();
+                //return Ok(item);
+                return Ok(item);
+
             }
         }
 

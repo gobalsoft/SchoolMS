@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c4e0847b17384c9eb6ac3a00727395e4" Name="Diagram1">
-        <EntityTypeShape EntityType="SchoolMSModel.SchoolAcademic" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.SchoolMaster" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.ClassSubject" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SchoolMSModel.SchoolClass" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SchoolMSModel.SchoolSubject" Width="1.5" PointX="7.625" PointY="0.875" />
-        <EntityTypeShape EntityType="SchoolMSModel.Subject_Category" Width="1.5" PointX="5.375" PointY="1.25" />
+        <EntityTypeShape EntityType="SchoolMSModel.Class" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.ClassSubject" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.SchoolAcademic" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.SchoolMaster" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.Subject_Category" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="SchoolMSModel.SubjectsMaster" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="SchoolMSModel.FK_SchoolSubjects_Subject_Category" />
       </Diagram>
     </edmx:Diagrams>
