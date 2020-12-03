@@ -20,6 +20,7 @@ namespace SchoolMSDataLayer
         public SchoolMSEntities()
             : base("name=SchoolMSEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -33,6 +34,18 @@ namespace SchoolMSDataLayer
         public virtual DbSet<SchoolMaster> SchoolMasters { get; set; }
         public virtual DbSet<Subject_Category> Subject_Category { get; set; }
         public virtual DbSet<SubjectsMaster> SubjectsMasters { get; set; }
+        public virtual DbSet<Caste> Castes { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Disability> Disabilities { get; set; }
+        public virtual DbSet<Nationality> Nationalities { get; set; }
+        public virtual DbSet<Religion> Religions { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Student_Class_Details> Student_Class_Details { get; set; }
+        public virtual DbSet<Student_communcation_Address> Student_communcation_Address { get; set; }
+        public virtual DbSet<Student_Parent_Details> Student_Parent_Details { get; set; }
+        public virtual DbSet<Student_Personal_Details> Student_Personal_Details { get; set; }
     
         public virtual ObjectResult<GetClassSubject_Result> GetClassSubject(Nullable<int> classID, Nullable<int> schoolId)
         {

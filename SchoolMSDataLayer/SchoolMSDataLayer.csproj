@@ -50,16 +50,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caste.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="City.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Class.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ClassSubject.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Disability.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetClassSubject_Result.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Nationality.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Religion.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="SchoolAcademic.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
@@ -79,6 +100,21 @@
       <DependentUpon>SchoolDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="SchoolMaster.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Class_Details.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student_communcation_Address.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Parent_Details.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Personal_Details.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="SubjectsMaster.cs">

@@ -175,11 +175,37 @@ namespace SMSApi.Controllers
 
                 //var a = item.Union(queryable).Distinct().ToList();
                 //return Ok(item);
-                return Ok(item);
+
+                ClassSubjectTemp classSubjectTemp = new ClassSubjectTemp();
+
+                List<ClassSubjectTemp> classSubjectTempslist = new List<ClassSubjectTemp>();
+
+                foreach (var temp in item.ToList())
+                {
+                    classSubjectTempslist.Add(new ClassSubjectTemp
+                    {
+                        SubjectName = temp.SubjectName,
+                        SubjectID = temp.SubjectID,
+                        IsSelect = temp.IsSelected
+                    });
+                }
+
+                classSubjectTempslist.ToList().Where(y => y.IsSelect == "1").ToList().ForEach(x => x.IsSelected = true);
+                classSubjectTempslist.ToList().Where(y => y.IsSelect == "0").ToList().ForEach(x => x.IsSelected = false);
+
+                return Ok(classSubjectTempslist);
 
             }
         }
 
+    }
+
+    public class ClassSubjectTemp
+    {
+        public int SubjectID { get; set; }
+        public string SubjectName { get; set; }
+        public string IsSelect { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
 
