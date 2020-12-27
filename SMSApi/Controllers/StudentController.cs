@@ -19,5 +19,27 @@ namespace SMSApi.Controllers
                 return Ok(schoolMSEntities.Religions.Where(x => x.SchoolID == schoolId).ToList());
             }
         }
+        [Route("api/GetNationality/{schoolId}")]
+        [HttpGet]
+        public IHttpActionResult GetNationality(int schoolId)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                return Ok(schoolMSEntities.Nationalities.Where(x => x.SchoolID == schoolId).ToList());
+            }
+        }
+        [Route("api/GetCategory/{schoolId}")]
+        [HttpGet]
+        public IHttpActionResult GetCategory(int schoolId)
+        {
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                return Ok(schoolMSEntities.Categories.Where(x => x.SchoolID == schoolId).ToList());
+            }
+        }
     }
+    
+    
 }
+
+

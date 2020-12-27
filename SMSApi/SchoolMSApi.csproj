@@ -254,6 +254,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Properties\PublishProfiles\SchoolDemo - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

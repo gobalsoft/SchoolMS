@@ -17,8 +17,6 @@
         <EntityTypeShape EntityType="SchoolMSModel.City" Width="1.5" PointX="12.25" PointY="4" />
         <EntityTypeShape EntityType="SchoolMSModel.Country" Width="1.5" PointX="7.75" PointY="4.125" />
         <EntityTypeShape EntityType="SchoolMSModel.Disability" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SchoolMSModel.Nationality" Width="1.5" PointX="9.75" PointY="6.75" />
-        <EntityTypeShape EntityType="SchoolMSModel.Religion" Width="1.5" PointX="7.75" PointY="9.75" />
         <EntityTypeShape EntityType="SchoolMSModel.State" Width="1.5" PointX="10" PointY="3.875" />
         <EntityTypeShape EntityType="SchoolMSModel.Student_Class_Details" Width="1.5" PointX="3" PointY="11.125" />
         <EntityTypeShape EntityType="SchoolMSModel.Student_communcation_Address" Width="1.5" PointX="3" PointY="8.25" />
@@ -29,6 +27,8 @@
         <AssociationConnector Association="SchoolMSModel.FK_Student_Class_Details_Student_Personal_Details" />
         <AssociationConnector Association="SchoolMSModel.FK_Student_communcation_Address_Student_Personal_Details" />
         <AssociationConnector Association="SchoolMSModel.FK_Student_Parent_Details_Student_Personal_Details" />
+        <EntityTypeShape EntityType="SchoolMSModel.Religion" Width="1.5" PointX="8.375" PointY="9.75" />
+        <EntityTypeShape EntityType="SchoolMSModel.Nationality" Width="1.5" PointX="5.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,7 +15,7 @@ namespace SchoolMSDataLayer
     public partial class Nationality
     {
         public int NationalityID { get; set; }
-        public string Nationality1 { get; set; }
+        public string NationalityName { get; set; }
         public bool Status { get; set; }
         public Nullable<int> SchoolID { get; set; }
     }

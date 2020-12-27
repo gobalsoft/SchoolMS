@@ -33,6 +33,7 @@ namespace SchoolMSDataLayer
         public int Aadhar_Number { get; set; }
         public bool Gender { get; set; }
         public bool Is_Login_Details_Sent { get; set; }
+        public Nullable<int> SchoolID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student_Class_Details> Student_Class_Details { get; set; }

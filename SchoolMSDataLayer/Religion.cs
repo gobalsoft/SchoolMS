@@ -15,7 +15,7 @@ namespace SchoolMSDataLayer
     public partial class Religion
     {
         public int ReligionID { get; set; }
-        public string Religion1 { get; set; }
+        public string ReligionName { get; set; }
         public bool Status { get; set; }
         public Nullable<int> SchoolID { get; set; }
     }

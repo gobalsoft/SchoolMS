@@ -68,7 +68,7 @@
             <PropertyRef Name="NationalityID" />
           </Key>
           <Property Name="NationalityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nationality" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NationalityName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="SchoolID" Type="int" />
         </EntityType>
@@ -77,7 +77,7 @@
             <PropertyRef Name="ReligionID" />
           </Key>
           <Property Name="ReligionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Religion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReligionName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="SchoolID" Type="int" />
         </EntityType>
@@ -156,6 +156,7 @@
           <Property Name="Aadhar_Number" Type="int" Nullable="false" />
           <Property Name="Gender" Type="bit" Nullable="false" />
           <Property Name="Is_Login_Details_Sent" Type="bit" Nullable="false" />
+          <Property Name="SchoolID" Type="int" />
         </EntityType>
         <EntityType Name="Subject_Category">
           <Key>
@@ -320,8 +321,6 @@
           <EntitySet Name="Cities" EntityType="SchoolMSModel.City" />
           <EntitySet Name="Countries" EntityType="SchoolMSModel.Country" />
           <EntitySet Name="Disabilities" EntityType="SchoolMSModel.Disability" />
-          <EntitySet Name="Nationalities" EntityType="SchoolMSModel.Nationality" />
-          <EntitySet Name="Religions" EntityType="SchoolMSModel.Religion" />
           <EntitySet Name="States" EntityType="SchoolMSModel.State" />
           <EntitySet Name="Student_Class_Details" EntityType="SchoolMSModel.Student_Class_Details" />
           <EntitySet Name="Student_communcation_Address" EntityType="SchoolMSModel.Student_communcation_Address" />
@@ -347,6 +346,8 @@
             <End Role="Student_Personal_Details" EntitySet="Student_Personal_Details" />
             <End Role="Student_Parent_Details" EntitySet="Student_Parent_Details" />
           </AssociationSet>
+          <EntitySet Name="Religions" EntityType="SchoolMSModel.Religion" />
+          <EntitySet Name="Nationalities" EntityType="SchoolMSModel.Nationality" />
         </EntityContainer>
         <EntityType Name="Class">
           <Key>
@@ -464,24 +465,6 @@
           <Property Name="Disability1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Nationality">
-          <Key>
-            <PropertyRef Name="NationalityID" />
-          </Key>
-          <Property Name="NationalityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nationality1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="SchoolID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Religion">
-          <Key>
-            <PropertyRef Name="ReligionID" />
-          </Key>
-          <Property Name="ReligionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Religion1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="SchoolID" Type="Int32" />
-        </EntityType>
         <EntityType Name="State">
           <Key>
             <PropertyRef Name="StateID" />
@@ -547,6 +530,7 @@
           <NavigationProperty Name="Student_Class_Details" Relationship="SchoolMSModel.FK_Student_Class_Details_Student_Personal_Details" FromRole="Student_Personal_Details" ToRole="Student_Class_Details" />
           <NavigationProperty Name="Student_communcation_Address" Relationship="SchoolMSModel.FK_Student_communcation_Address_Student_Personal_Details" FromRole="Student_Personal_Details" ToRole="Student_communcation_Address" />
           <NavigationProperty Name="Student_Parent_Details" Relationship="SchoolMSModel.FK_Student_Parent_Details_Student_Personal_Details" FromRole="Student_Personal_Details" ToRole="Student_Parent_Details" />
+          <Property Name="SchoolID" Type="Int32" />
         </EntityType>
         <Association Name="FK_City_State">
           <End Type="SchoolMSModel.State" Role="State" Multiplicity="1" />
@@ -608,6 +592,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Religion">
+          <Key>
+            <PropertyRef Name="ReligionID" />
+          </Key>
+          <Property Name="ReligionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReligionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="SchoolID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Nationality">
+          <Key>
+            <PropertyRef Name="NationalityID" />
+          </Key>
+          <Property Name="NationalityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NationalityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="SchoolID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -729,26 +731,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Nationalities">
-            <EntityTypeMapping TypeName="SchoolMSModel.Nationality">
-              <MappingFragment StoreEntitySet="Nationality">
-                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Nationality1" ColumnName="Nationality" />
-                <ScalarProperty Name="NationalityID" ColumnName="NationalityID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Religions">
-            <EntityTypeMapping TypeName="SchoolMSModel.Religion">
-              <MappingFragment StoreEntitySet="Religion">
-                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Religion1" ColumnName="Religion" />
-                <ScalarProperty Name="ReligionID" ColumnName="ReligionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="SchoolMSModel.State">
               <MappingFragment StoreEntitySet="State">
@@ -798,6 +780,7 @@
           <EntitySetMapping Name="Student_Personal_Details">
             <EntityTypeMapping TypeName="SchoolMSModel.Student_Personal_Details">
               <MappingFragment StoreEntitySet="Student_Personal_Details">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
                 <ScalarProperty Name="Is_Login_Details_Sent" ColumnName="Is_Login_Details_Sent" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Aadhar_Number" ColumnName="Aadhar_Number" />
@@ -809,6 +792,26 @@
                 <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
                 <ScalarProperty Name="Student_ID" ColumnName="Student_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Religions">
+            <EntityTypeMapping TypeName="SchoolMSModel.Religion">
+              <MappingFragment StoreEntitySet="Religion">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReligionName" ColumnName="ReligionName" />
+                <ScalarProperty Name="ReligionID" ColumnName="ReligionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nationalities">
+            <EntityTypeMapping TypeName="SchoolMSModel.Nationality">
+              <MappingFragment StoreEntitySet="Nationality">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NationalityName" ColumnName="NationalityName" />
+                <ScalarProperty Name="NationalityID" ColumnName="NationalityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
