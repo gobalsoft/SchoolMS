@@ -10,9 +10,9 @@ using Z.EntityFramework.Plus;
 
 namespace SMSApi.Controllers
 {
+
     public class SchoolController : ApiController
     {
-        //Academic page
         [Route("api/SchoolAcademic/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetSchoolAllAcademic(int schoolId)
@@ -69,64 +69,42 @@ namespace SMSApi.Controllers
             }
         }
 
-        //Class
+
         [Route("api/GetAllClass/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetAllClass(int schoolId)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                var list = schoolMSEntities.Classes.Where(x => x.Schoolid == schoolId).ToList();
+                var list = schoolMSEntities.SchoolClasses.Where(x => x.Schoolid == schoolId).ToList();
                 return Ok(list);
             }
         }
         [Route("api/SaveSchoolClass")]
         [HttpPost]
-        public IHttpActionResult SaveSchoolClass(Class schoolClass)
+        //Save Class
+        public IHttpActionResult SaveSchoolClass(SchoolClass schoolClass)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                schoolMSEntities.Classes.Add(schoolClass);
+                schoolMSEntities.SchoolClasses.Add(schoolClass);
                 return Ok(schoolMSEntities.SaveChanges());
             }
         }
 
-        //School Subject
+
         [Route("api/GetAllSubject/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetAllSubject(int schoolId)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-                var item = (from subjectmaster in schoolMSEntities.SubjectsMasters
-                            join category in schoolMSEntities.Subject_Category
-                            on subjectmaster.Category_id equals category.Category_id into temp
-                            from t in temp.DefaultIfEmpty()
-                            where subjectmaster.Schoolid == schoolId
-                            select new
-                            {
-                                SubjectID = subjectmaster.SubjectID,
-                                Subjectcode = subjectmaster.Subjectcode,
-                                Subjectname = subjectmaster.Subjectname,
-                                CategoryName = t.CategoryName,
-                            }).ToList();
-                return Ok(item);
+                return Ok(schoolMSEntities.SchoolSubjects.Where(x => x.Schoolid == schoolId).ToList());
             }
         }
-        [Route("api/SaveSchoolSubject")]
-        [HttpPost]
-        public IHttpActionResult SaveSchoolSubject(SubjectsMaster schoolSubject)
-        {
-            using (var schoolMSEntities = new SchoolMSEntities())
-            {
-                schoolMSEntities.SubjectsMasters.Add(schoolSubject);
-                return Ok(schoolMSEntities.SaveChanges());
-            }
-        }
-
-        //Class Subject
         [Route("api/SaveClassSubject")]
         [HttpPost]
+        //Save Calss Subject
         public IHttpActionResult SaveClassSubject(ClassSubject classSubject)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
@@ -135,13 +113,13 @@ namespace SMSApi.Controllers
                 return Ok(schoolMSEntities.SaveChanges());
             }
         }
-        [Route("api/GetClassSubject/{schoolId}/{classId}")]
+
+        [Route("api/GetClassSubject/{schoolId}")]
         [HttpGet]
         public IHttpActionResult GetClassSubject(int schoolId, int classId)
         {
             using (var schoolMSEntities = new SchoolMSEntities())
             {
-
                 var item = schoolMSEntities.GetClassSubject(classId, schoolId).ToList();
 
                 //var item = (from classSubject in schoolMSEntities.ClassSubjects
@@ -194,7 +172,6 @@ namespace SMSApi.Controllers
                 classSubjectTempslist.ToList().Where(y => y.IsSelect == "0").ToList().ForEach(x => x.IsSelected = false);
 
                 return Ok(classSubjectTempslist);
-
             }
         }
 

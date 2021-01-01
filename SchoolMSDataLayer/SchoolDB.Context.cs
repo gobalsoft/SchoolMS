@@ -21,6 +21,7 @@ namespace SchoolMSDataLayer
             : base("name=SchoolMSEntities")
         {
             this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -32,6 +33,9 @@ namespace SchoolMSDataLayer
         public virtual DbSet<ClassSubject> ClassSubjects { get; set; }
         public virtual DbSet<SchoolAcademic> SchoolAcademics { get; set; }
         public virtual DbSet<SchoolMaster> SchoolMasters { get; set; }
+        public virtual DbSet<ClassSubject> ClassSubjects { get; set; }
+        public virtual DbSet<SchoolClass> SchoolClasses { get; set; }
+        public virtual DbSet<SchoolSubject> SchoolSubjects { get; set; }
         public virtual DbSet<Subject_Category> Subject_Category { get; set; }
         public virtual DbSet<SubjectsMaster> SubjectsMasters { get; set; }
         public virtual DbSet<Caste> Castes { get; set; }
