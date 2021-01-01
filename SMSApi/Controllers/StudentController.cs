@@ -37,9 +37,30 @@ namespace SMSApi.Controllers
                 return Ok(schoolMSEntities.Categories.Where(x => x.SchoolID == schoolId).ToList());
             }
         }
+
+        [Route("api/StudentPersonalDetails")]
+        [HttpPost]
+        public IHttpActionResult StudentPersonalDetails(Student_Personal_Details student_Personal_Details)
+        {
+
+            using (var schoolMSEntities = new SchoolMSEntities())
+            {
+                try
+                {
+                    schoolMSEntities.Student_Personal_Details.Add(student_Personal_Details);
+                    return Ok(schoolMSEntities.SaveChanges());
+                }
+                catch (Exception ex)
+                {
+                    return Ok(ex.Message);
+                }
+
+            }
+        }
+
     }
-    
-    
+
+
 }
 
 
