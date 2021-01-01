@@ -17,5 +17,6 @@ namespace SchoolMSDataLayer
         public int CasteID { get; set; }
         public string Caste1 { get; set; }
         public bool Status { get; set; }
+
     }
 }
